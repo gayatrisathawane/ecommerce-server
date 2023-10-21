@@ -93,15 +93,41 @@ app.get('/product',async (req,res)=>{
 
  app.delete('/product/:_id', async(req,res)=>{
 
-    const {_id } = req.params
+    const { _id } = req.params
 
-    await Product.deleteOne({_id:_id})
+    await Product.deleteOne({ _id  :_id })
 
     res.json({
         message:"delete data successfully "
     })
  })
 
+
+ //update with put method 
+
+ app.put('/product/:_id' , async (req,res)=>{
+
+    const { _id } = req.params
+    
+    const {name, description, price, productImage, brand } = req.body
+
+    await Product.updateOne(({ _id :_id }), ({ $set:{
+
+        name: name,
+        description: description,
+        price: price,
+        productImage: productImage,
+        brand: brand
+
+    }}))
+
+    const updatedProduct = await Product.findOne({ _id :_id })
+     res.json({
+        messsage:"updated",
+        data :updatedProduct
+     })
+
+ })
 
 app.listen(PORT, () => {
     console.log(`Port running on ${PORT}`)

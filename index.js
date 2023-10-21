@@ -108,7 +108,7 @@ app.get('/product',async (req,res)=>{
  app.put('/product/:_id' , async (req,res)=>{
 
     const { _id } = req.params
-    
+
     const {name, description, price, productImage, brand } = req.body
 
     await Product.updateOne(({ _id :_id }), ({ $set:{
@@ -126,6 +126,52 @@ app.get('/product',async (req,res)=>{
         messsage:"updated",
         data :updatedProduct
      })
+
+ })
+
+ //update with patch method 
+
+ app.patch('/product/:_id', async(req,res)=>{
+
+    const { _id } = req.params
+
+    const {name, description, price, productImage, brand } = req.body
+
+    const findProduct = await Product.findById(_id)
+
+    // name: name,
+    // description: description,
+    // price: price,
+    // productImage: productImage,
+    // brand: brand
+
+    if(name)
+    {
+        findProduct.name=name
+    }
+   if(description)
+   {
+    findProduct.description=description
+   }
+
+   if(price){
+    findProduct.price=price
+   }
+   if(productImage)
+   {
+    findProduct.productImage=productImage
+   }
+   if(brand)
+   {
+    findProduct.brand=brand
+   }
+
+   const savedFinddata = await findProduct.save()
+
+   res.json({
+    data:savedFinddata,
+    message:"update data"
+   })
 
  })
 

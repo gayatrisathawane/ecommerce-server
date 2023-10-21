@@ -1,6 +1,8 @@
 import express, { query } from 'express'
-import mongoose, { Schema, model } from 'mongoose'
+import mongoose  from 'mongoose'
 import dotenv from 'dotenv'
+import Product  from './src/modules/product.js';
+
 
 dotenv.config();
 
@@ -21,18 +23,6 @@ const connectMongoDb = async () => {
 connectMongoDb()
 
 // schema created
-const productsSchema = new Schema({
-    name: String,
-    description: String,
-    price: Number,
-    productImage: String,
-    brand: String
-})
-
-// model created
-
-const Product = mongoose.model('Product', productsSchema)
-
 
 app.get('/products', async (req, res) => {
 
@@ -43,6 +33,8 @@ app.get('/products', async (req, res) => {
         message: "succesfully get data"
     })
 })
+
+// add product 
 
 app.post('/addproduct', async (req, res) => {
 
@@ -139,12 +131,6 @@ app.get('/product',async (req,res)=>{
 
     const findProduct = await Product.findById(_id)
 
-    // name: name,
-    // description: description,
-    // price: price,
-    // productImage: productImage,
-    // brand: brand
-
     if(name)
     {
         findProduct.name=name
@@ -174,6 +160,8 @@ app.get('/product',async (req,res)=>{
    })
 
  })
+
+
 
 app.listen(PORT, () => {
     console.log(`Port running on ${PORT}`)

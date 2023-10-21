@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { query } from 'express'
 import mongoose, { Schema, model } from 'mongoose'
 import dotenv from 'dotenv'
 
@@ -88,6 +88,19 @@ app.get('/product',async (req,res)=>{
         }
     )
 })
+
+ // delete data by id 
+
+ app.delete('/product/:_id', async(req,res)=>{
+
+    const {_id } = req.params
+
+    await Product.deleteOne({_id:_id})
+
+    res.json({
+        message:"delete data successfully "
+    })
+ })
 
 
 app.listen(PORT, () => {

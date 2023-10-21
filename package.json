@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node --watch index.js"
+  
   },
   "keywords": [],
   "author": "",
